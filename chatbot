@@ -1,5 +1,7 @@
+import os
 import openai
-
+import gradio as gr
+import random
 
 # Set your OpenAI API key here
 openai.api_key = "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"
