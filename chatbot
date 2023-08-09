@@ -1,0 +1,44 @@
+import os
+import openai
+import gradio as gr
+import random
+
+# Set your OpenAI API key here
+openai.api_key = "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"
+
+def get_gpt3_response(prompt):
+    response = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        max_tokens=50
+    )
+    return response.choices[0].text.strip()
+
+def main():
+    print("Chatbot: Hello! I'm here to help you find the right telecom plan. How can I assist you today?")
+    
+    while True:
+        user_input = input("You: ")
+        conversation_history = user_input + "\n"
+
+        if user_input.lower() in ["bye", "exit", "quit"]:
+            print("Chatbot: Goodbye! Have a great day.")
+            break
+
+        if "plan" in user_input.lower() or "offer" in user_input.lower():
+            user_input += "\nChatbot: Sure! Could you please provide me with more details about what you're looking for?"
+
+        if "cheapest" in user_input.lower() or "budget" in user_input.lower():
+            user_input += "\nChatbot: Of course! Are you primarily interested in a plan with lower costs or specific features?"
+
+        if "unlimited" in user_input.lower() or "data" in user_input.lower():
+            user_input += "\nChatbot: Great! Would you like an unlimited data plan or a plan with a specific data cap?"
+
+        if "international" in user_input.lower() or "roaming" in user_input.lower():
+            user_input += "\nChatbot: Certainly! Are you looking for a plan with international calling and roaming options?"
+
+        response = get_gpt3_response(conversation_history)
+        print("Chatbot:", response)
+
+if __name__ == "__main__":
+    main()
